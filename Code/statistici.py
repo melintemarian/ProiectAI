@@ -1,5 +1,8 @@
 import os
 
+#! ATENTIE acest modul nu o sa functioneze daca este apelat singur in consola in folderul in care se afla
+#! Fie rulati fisierul in cadrul proiectului, fie rulati fisierul din folderul repositoriului
+
 def obtineStatistici(): #Aceasta functie numara cate poze avem pentru antrenare si testare pentru fiecare litera
     absolute_path = os.path.dirname(os.path.realpath("char_trainable_split")) # Cautam dinamic fisierul char_trainable_split
     dir_path_train=os.path.join(absolute_path,"char_trainable_split","test") # Obtinem path-ul pentru folderul de antrenare
