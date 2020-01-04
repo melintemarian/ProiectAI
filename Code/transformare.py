@@ -35,19 +35,39 @@ def obtineLatimeaMaximaSiLatimeaMinima(lista): # obtinem prima si ultima coloana
     return(minim,maxim)
 
 def eliminaExcesul(lista): # copiem dreptunghiul format de cele 4 coordonate intr-o noua lista
-    (minI,maxI)=obtineInaltimeaMinimaSiInaltimeaMaxima(lista)
-    (minJ,maxJ)=obtineLatimeaMaximaSiLatimeaMinima(lista)
+
+    def Optimizeaza(inputLista,minI,maxI,minJ,maxJ):
+        nouaLista=list() # lista noua va contine lista de matrici
+        for i in inputLista:
+            aux=[] # aux va contine o matrice
+            for j in range(minI,maxI+1):
+                buff=[] # buff va contine doar o linie
+                for k in range(minJ,maxJ+1):
+                    buff.append(i[j][k])
+                aux.append(buff)
+            nouaLista.append(aux)
+        return nouaLista
     
-    nouaLista=list() # lista noua va contine lista de matrici
-    for i in lista:
-        aux=[] # aux va contine o matrice
-        for j in range(minI,maxI+1):
-            buff=[] # buff va contine doar o linie
-            for k in range(minJ,maxJ+1):
-               buff.append(i[j][k])
-            aux.append(buff)
-        nouaLista.append(aux)
-    return nouaLista
+    (listaTrain,listaTest) = lista # creem doua liste
+
+    #aflam minim/maximul pentru fiecare lista
+    (minITemp,maxITemp)=obtineInaltimeaMinimaSiInaltimeaMaxima(listaTrain) 
+    (minJTemp,maxJTemp)=obtineLatimeaMaximaSiLatimeaMinima(listaTrain)
+
+    (minITemp2,maxITemp2)=obtineInaltimeaMinimaSiInaltimeaMaxima(listaTest)
+    (minJTemp2,maxJTemp2)=obtineLatimeaMaximaSiLatimeaMinima(listaTest)
+
+    #luam extremele
+    minI=min(minITemp,minITemp2)
+    maxI=max(maxITemp,maxITemp2)
+    minJ=min(minJTemp,minJTemp2)
+    maxJ=max(maxJTemp,maxJTemp2)
+    
+    #oprimizam fiecare lista in mod individual
+    listaTrainFinala=Optimizeaza(listaTrain,minI,maxI,minJ,maxJ)
+    listaTestFinala=Optimizeaza(listaTest,minI,maxI,minJ,maxJ)
+
+    return (listaTrainFinala,listaTestFinala) #retrunam tuplul; prima lista de antrebare, a doua lista de testare
 
 if __name__ == "__main__":
     
@@ -59,9 +79,20 @@ if __name__ == "__main__":
     lista.append(y)
     lista.append(z)
 
-    aux=eliminaExcesul(lista)
-    for i in aux:
+    a=transformaImagineInMatrice("char_trainable_split/train/a/0b7a718b-8cbd-427b-b5f4-5041155c4a48.png")
+    b=transformaImagineInMatrice("char_trainable_split/train/a/1b41dca0-b24b-4304-bf60-0255844db435.png")
+    c=transformaImagineInMatrice("char_trainable_split/train/a/2def46ee-4686-496f-abc4-96142caf76df.png")
+    lista2=[]
+    lista2.append(a)
+    lista2.append(b)
+    lista2.append(c)
+
+    aux=eliminaExcesul((lista2,lista))
+    for i in aux[0]:
         for j in i:
             print(j)
         print()
-    print(len(aux),len(aux[0]),len)
+    for i in aux[1]:
+        for j in i:
+            print(j)
+        print()
