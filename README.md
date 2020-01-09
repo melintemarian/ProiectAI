@@ -9,7 +9,7 @@ Software extra ce trebuie instalat:
   
     python3 -m pip install opencv-python
   
-  tenserflow (backend pt retea)
+  tensorflow (backend pt retea)
   
     python3 -m pip install tensorflow
   
