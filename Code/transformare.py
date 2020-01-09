@@ -1,4 +1,5 @@
 from cv2 import cv2
+import numpy
 
 #! ATENTIE acest modul nu o sa functioneze daca este apelat singur in consola in folderul in care se afla
 #! Fie rulati fisierul in cadrul proiectului, fie rulati fisierul din folderul repositoriului
@@ -6,7 +7,7 @@ from cv2 import cv2
 def transformaImagineInMatrice(image_path): # transforma imaginea data intro matrice cu valori de la 0 pt alb la 1 pt negru
     img = cv2.imread(image_path, 0) # citeste imaginea in grayscale
     img_reverted= cv2.bitwise_not(img) # inversam valorile pentru ca albul sa fie 0, iar negrul 255
-    new_img = img_reverted / 255.0
+    new_img = img_reverted / 255
     return new_img
 
 def obtineInaltimeaMinimaSiInaltimeaMaxima(lista): # obtinem primul si ultimul rand la care apare un pixel negru

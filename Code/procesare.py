@@ -1,5 +1,6 @@
 import transformare
 import os
+import random
 
 #! ATENTIE acest modul nu o sa functioneze daca este apelat singur in consola in folderul in care se afla
 #! Fie rulati fisierul in cadrul proiectului, fie rulati fisierul din folderul repositoriului
@@ -9,33 +10,38 @@ def obtineLista():
     dir_path_train=os.path.join(absolute_path,"char_trainable_split","train") # Obtinem path-ul pentru folderul de antrenare
     dir_path_test=os.path.join(absolute_path,"char_trainable_split","test") # Obtinem path-ul pentru folderul de test
     lista_litere=os.listdir(dir_path_test) # Obtinem lista de litere a alfabetului
-    dictionarFinal=dict() # creem dictionarul in care sa stocam tot
+    listaPozeTrain=[] # creem listele in care sa stocam datele de antrenare si test
+    listaPozeTest=[]
     for i in lista_litere:
-        listaPozeTrain=[] # creem listele in care sa stocam datele de antrenare si test
-        listaPozeTest=[]
-
         director=os.path.join(dir_path_train,i)
         aux=os.listdir(director)
         for j in aux: # pentru fiecare poza de antrenare creem o matrice
             temp=transformare.transformaImagineInMatrice(os.path.join(director,j))
-            listaPozeTrain.append(temp)
+            listaPozeTrain.append((temp,i))
 
         director=os.path.join(dir_path_test,i)
         aux=os.listdir(director)
         for j in aux: # pentru fiecare poza de testare creem o matrice
             temp=transformare.transformaImagineInMatrice(os.path.join(director,j))
-            listaPozeTest.append(temp)
-        
-        (listaPozeTrain,listaPozeTest)=transformare.eliminaExcesul((listaPozeTrain,listaPozeTest)) # optimizam tot
-        dictionarFinal[i]=(listaPozeTrain,listaPozeTest) # adaugam in dictionar o tupla; prima data lista de antrenament, dupa lista de test
-    return dictionarFinal # retrunam dicionarul
+            listaPozeTest.append((temp,i))
+    
+    auxTrain=[i[0] for i in listaPozeTrain]
+    auxTest=[i[0] for i in listaPozeTest]    
+    (auxTrain,auxTest)=transformare.eliminaExcesul((auxTrain,auxTest))
+    ListaFinalaTrain=[]
+    ListaFinalaTest=[]
+    for i in range(0,len(listaPozeTrain)):
+        ListaFinalaTrain.append((auxTrain[0],listaPozeTrain[i][1]))
+    for i in range(0,len(listaPozeTest)):
+        ListaFinalaTest.append((auxTest[0],listaPozeTest[i][1]))
+    #dictionarFinal[i]=(listaPozeTrain,listaPozeTest) # adaugam in dictionar o tupla; prima data lista de antrenament, dupa lista de test
+    return (ListaFinalaTrain,ListaFinalaTest) # retrunam finalul
 
 if __name__ == "__main__":
     #procesarea ia in jur de 18-19 secunde
-    y=obtineLista()
+    (y,z)=obtineLista()
     print(len(y))
-    x=y['j']
-    for i in x[0]:
-        for j in i:
-            print(j)
-        print()
+    random.shuffle(y)
+    for x in y[0:100]:
+        print(len(x[0]),len(x[0][0]))
+    print()
