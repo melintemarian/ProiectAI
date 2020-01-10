@@ -31,9 +31,9 @@ def obtineLista():
     ListaFinalaTrain=[]
     ListaFinalaTest=[]
     for i in range(0,len(listaPozeTrain)):
-        ListaFinalaTrain.append((auxTrain[0],listaPozeTrain[i][1]))
+        ListaFinalaTrain.append((auxTrain[i],listaPozeTrain[i][1]))
     for i in range(0,len(listaPozeTest)):
-        ListaFinalaTest.append((auxTest[0],listaPozeTest[i][1]))
+        ListaFinalaTest.append((auxTest[i],listaPozeTest[i][1]))
     #dictionarFinal[i]=(listaPozeTrain,listaPozeTest) # adaugam in dictionar o tupla; prima data lista de antrenament, dupa lista de test
     return (ListaFinalaTrain,ListaFinalaTest) # retrunam finalul
 
@@ -42,6 +42,7 @@ if __name__ == "__main__":
     (y,z)=obtineLista()
     print(len(y))
     random.shuffle(y)
-    for x in y[0:100]:
-        print(len(x[0]),len(x[0][0]))
-    print()
+    for x in range(0,100):
+        for i in y[x][0]:
+            print(i)
+        print(y[x][1])

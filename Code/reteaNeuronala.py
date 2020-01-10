@@ -34,13 +34,11 @@ def reteaNeuronala():
     Y_Train=numpy.array([amb[i[1]] for i in listaTrain])
     X_Test=numpy.array([i[0] for i in listaTest])
     Y_Test=numpy.array([amb[i[1]] for i in listaTest])
-
+    
     X_Train=X_Train.reshape(dimensiune[0],dimensiune[1]*dimensiune[2])
     X_Test=X_Test.reshape(len(listaTest),dimensiune[1]*dimensiune[2])
     Y_Train=to_categorical(Y_Train)
     Y_Test=to_categorical(Y_Test)
-    print(X_Train.shape)
-    print(Y_Train.shape)
     model = Sequential()
     model.add(Dense(dimensiune[1]*dimensiune[2],input_shape=(dimensiune[1]*dimensiune[2],)))
     model.add(Dense(int(dimensiune[1]*dimensiune[2]/4),activation="relu"))
@@ -50,10 +48,10 @@ def reteaNeuronala():
 
     model.compile(loss='categorical_crossentropy',optimizer="adam",metrics=['accuracy'])
     
-    model.fit(X_Train,Y_Train,epochs=100,batch_size=10)
+    model.fit(X_Train,Y_Train,epochs=2,batch_size=10)
 
     scores=model.evaluate(X_Test,Y_Test)
-
+    
     print(scores)
 
 if __name__ == "__main__":
