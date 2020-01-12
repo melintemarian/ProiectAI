@@ -28,8 +28,10 @@ if __name__ == "__main__":
 	print(list2)
 	print(litere)
 
+	plt.figure( figsize=(20,10) )
 	plt.bar(litere, list1)
 	plt.show()
 
+	plt.figure( figsize=(20,10) )
 	plt.bar(litere, list2)
 	plt.show()
