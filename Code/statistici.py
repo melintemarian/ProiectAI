@@ -1,4 +1,6 @@
 import os
+import pandas as pd
+import matplotlib.pyplot as plt
 
 #! ATENTIE acest modul nu o sa functioneze daca este apelat singur in consola in folderul in care se afla
 #! Fie rulati fisierul in cadrul proiectului, fie rulati fisierul din folderul repositoriului
@@ -16,4 +18,18 @@ def obtineStatistici(): #Aceasta functie numara cate poze avem pentru antrenare 
     return dictionar_litere
 
 if __name__ == "__main__":
-    print(obtineStatistici())
+
+	lista = list(obtineStatistici().values())
+	litere = obtineStatistici().keys()
+	print(lista)
+	list1, list2 = zip(*lista)
+
+	print(list1)
+	print(list2)
+	print(litere)
+
+	plt.bar(litere, list1)
+	plt.show()
+
+	plt.bar(litere, list2)
+	plt.show()
