@@ -38,11 +38,13 @@ def obtineLista():
     return (ListaFinalaTrain,ListaFinalaTest) # retrunam finalul
 
 if __name__ == "__main__":
-    #procesarea ia in jur de 18-19 secunde
+    #procesarea ia in jur de 24-26 secunde
     (y,z)=obtineLista()
-    print(len(y))
     random.shuffle(y)
-    for x in range(0,100):
+    litera=""
+    print(len(y[0][0][0]),len(y[0][0]))
+    '''for x in range(0,100):
         for i in y[x][0]:
-            print(i)
-        print(y[x][1])
+            print(i,len(i))
+        print(y[x][1],len(y[x][0]))
+        print()'''

@@ -7,6 +7,20 @@ from keras.layers import Flatten
 import numpy
 from tensorflow import keras as ks
 from keras.utils import to_categorical
+from keras.callbacks import Callback,ModelCheckpoint
+from keras.models import load_model
+from keras.layers import Dropout
+from keras.wrappers.scikit_learn import KerasClassifier
+import keras.backend as K
+
+def get_f1(y_true, y_pred): #taken from old keras source code
+    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+    possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
+    predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))
+    precision = true_positives / (predicted_positives + K.epsilon())
+    recall = true_positives / (possible_positives + K.epsilon())
+    f1_val = 2*(precision*recall)/(precision+recall+K.epsilon())
+    return f1_val
 
 def codare(lista):
     final=dict()
@@ -44,14 +58,14 @@ def reteaNeuronala():
     model.add(Dense(int(dimensiune[1]*dimensiune[2]/4),activation="relu"))
     model.add(Dense(int(dimensiune[1]*dimensiune[2]/16),activation="relu"))
     model.add(Dense(int(dimensiune[1]*dimensiune[2]/64),activation="relu"))
-    model.add(Dense(32,activation="sigmoid"))
+    model.add(Dense(32,activation="softmax"))
 
-    model.compile(loss='categorical_crossentropy',optimizer="adam",metrics=['accuracy'])
+    model.compile(loss='categorical_crossentropy',optimizer="adam",metrics=['accuracy',get_f1])
     
-    model.fit(X_Train,Y_Train,epochs=2,batch_size=10)
+    model.fit(X_Train,Y_Train,epochs=10,batch_size=100,validation_data=(X_Test,Y_Test))
 
     scores=model.evaluate(X_Test,Y_Test)
-    
+
     print(scores)
 
 if __name__ == "__main__":
