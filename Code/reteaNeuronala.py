@@ -65,8 +65,19 @@ def reteaNeuronala():
     model.fit(X_Train,Y_Train,epochs=10,batch_size=100,validation_data=(X_Test,Y_Test))
 
     scores=model.evaluate(X_Test,Y_Test)
-
     print(scores)
+    '''for i in list(set([j[1] for j in listaTest])):
+        auxiliarX=[]
+        auxiliarY=[]
+        auxiliarX=[k[0] for k in listaTest if k[1]==i]
+        o=len(auxiliarX)
+        auxiliarX=numpy.array(auxiliarX)
+        auxiliarX=auxiliarX.reshape(o,dimensiune[1]*dimensiune[2])
+        auxiliarY=numpy.array([amb[k[1]] for k in listaTest if k[1]==i])
+        auxiliarY=to_categorical(auxiliarY)
+        scores=model.evaluate(auxiliarX,auxiliarY)
+        print("Litera {}: Acuratete: {}, F1 Score: {}".format(i,scores[1],scores[2]))'''
+
 
 if __name__ == "__main__":
     reteaNeuronala()

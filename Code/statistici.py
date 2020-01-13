@@ -21,12 +21,12 @@ if __name__ == "__main__":
 
 	lista = list(obtineStatistici().values())
 	litere = obtineStatistici().keys()
-	print(lista)
+	#print(lista)
 	list1, list2 = zip(*lista)
 
-	print(list1)
-	print(list2)
-	print(litere)
+	#print(list1)
+	#print(list2)
+	#print(litere)
 
 	plt.figure( figsize=(20,10) )
 	plt.bar(litere, list1)
